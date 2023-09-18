@@ -65,7 +65,7 @@ export default function BoardWrite(props) {
     }
   };
   const onClickUpdate = async () => {
-    const myVariables = { updateBoardInput: [], boardId: router.query.id };
+    const myVariables = { updateBoardInput: {}, boardId: router.query.id };
     if (writer) myVariables.updateBoardInput.writer = writer;
     if (title) myVariables.updateBoardInput.title = title;
     if (contents) myVariables.updateBoardInput.contents = contents;

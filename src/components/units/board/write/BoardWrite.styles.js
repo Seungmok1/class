@@ -88,6 +88,7 @@ export const SearchButton = styled.button`
   width: 124px;
   height: 52px;
   margin-left: 16px;
+  cursor: pointer;
 `;
 
 export const Address = styled.input`
@@ -123,6 +124,7 @@ export const UploadButton = styled.button`
   background-color: gray;
   border: none;
   margin-right: 10px;
+  cursor: pointer;
 `;
 
 export const OptionWrapper = styled.div`
@@ -148,6 +150,7 @@ export const ButtonWrapper = styled.div`
 export const SubmitButton = styled.button`
   width: 179px;
   height: 52px;
-  background-color: ${(props) => (props.isActive ? "yellow" : "gray")};
   border: none;
+  background-color: ${(props) => (props.isActive ? "yellow" : "gray")};
+  cursor: ${(props) => (props.isActive ? "pointer" : "default")};
 `;
