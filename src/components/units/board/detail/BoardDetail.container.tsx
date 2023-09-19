@@ -13,14 +13,14 @@ export default function BoardDetail() {
     variables: { boardId: router.query.id },
   });
   const onClickMove = () => {
-    router.push(`/boards`);
+    void router.push(`/boards`);
   };
   const onClickUpdate = () => {
-    router.push(`/boards/${data.fetchBoard._id}/edit`);
+    void router.push(`/boards/${data.fetchBoard._id}/edit`);
   };
   const onClickDelete = () => {
-    deleteBoard();
-    router.push(`/boards`);
+    void deleteBoard();
+    void router.push(`/boards`);
   };
   return (
     <>
