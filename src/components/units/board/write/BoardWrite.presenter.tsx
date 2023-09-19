@@ -1,6 +1,7 @@
 import * as S from "./BoardWrite.styles";
+import type { IBoardWriteUIProps } from "./BoardWrite.types";
 
-export default function BoardWriteUI(props) {
+export default function BoardWriteUI(props: IBoardWriteUIProps) {
   return (
     <S.Wrapper>
       <S.Title>{props.isEdit ? "게시물 수정" : "게시물 등록"}</S.Title>
@@ -11,7 +12,8 @@ export default function BoardWriteUI(props) {
             type="text"
             placeholder="이름을 적어주세요"
             onChange={props.onChangeWriter}
-            defaultValue={props.isEdit ? props.data?.fetchBoard.writer : ""}
+            defaultValue={props.data?.fetchBoard.writer ?? ""}
+            readOnly={props.isEdit}
           />
           <S.Error>{props.errorWriter}</S.Error>
         </S.InputWrapper>
@@ -31,17 +33,16 @@ export default function BoardWriteUI(props) {
           type="text"
           placeholder="제목을 작성해주세요"
           onChange={props.onChangeTitle}
-          defaultValue={props.isEdit ? props.data?.fetchBoard.title : ""}
+          defaultValue={props.data?.fetchBoard.title ?? ""}
         />
         <S.Error>{props.errorTitle}</S.Error>
       </S.InputWrapper>
       <S.InputWrapper>
         <S.Label>내용</S.Label>
         <S.Contents
-          type="text"
           placeholder="내용을 작성해주세요"
           onChange={props.onChangeContents}
-          defaultValue={props.isEdit ? props.data?.fetchBoard.contents : ""}
+          defaultValue={props.data?.fetchBoard.contents ?? ""}
         />
         <S.Error>{props.errorContents}</S.Error>
       </S.InputWrapper>
@@ -74,7 +75,7 @@ export default function BoardWriteUI(props) {
       <S.ButtonWrapper>
         <S.SubmitButton
           onClick={props.isEdit ? props.onClickUpdate : props.onClickSubmit}
-          isActive={props.isActive}
+          isActive={props.isEdit ? true : props.isActive}
         >
           {props.isEdit ? "수정하기" : "등록하기"}
         </S.SubmitButton>

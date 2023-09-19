@@ -1,11 +1,11 @@
 import { useMutation } from "@apollo/client";
-import CommentWriteUI from "./CommentWrite.presenter.js";
+import CommentWriteUI from "./CommentWrite.presenter";
 import { useRouter } from "next/router";
 import {
   CREATE_BOARD_COMMENT,
   FETCH_BOARD_COMMENTS,
-} from "./CommentWrite.queries.js";
-import { useState } from "react";
+} from "./CommentWrite.queries";
+import { type ChangeEvent, useState } from "react";
 
 export default function CommentWrite() {
   const router = useRouter();
@@ -17,16 +17,16 @@ export default function CommentWrite() {
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
 
-  const onChangeWriter = (e) => {
+  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
   };
-  const onChangeRating = (e) => {
+  const onChangeRating = (e: any) => {
     setRating(e);
   };
-  const onChangeChange = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
   };
 
@@ -42,7 +42,7 @@ export default function CommentWrite() {
     }
     if (writer && password && contents) {
       try {
-        const result = await createBoardComment({
+        await createBoardComment({
           variables: {
             createBoardCommentInput: {
               writer,
@@ -75,7 +75,7 @@ export default function CommentWrite() {
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeRating={onChangeRating}
-      onChangeChange={onChangeChange}
+      onChangeContents={onChangeContents}
       writer={writer}
       password={password}
       contents={contents}

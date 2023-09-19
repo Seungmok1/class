@@ -1,10 +1,11 @@
 import { useMutation, useQuery } from "@apollo/client";
-import CommentListUI from "./CommentList.presenter.js";
+import CommentListUI from "./CommentList.presenter";
 import {
   FETCH_BOARD_COMMENTS,
   DELETE_BOARD_COMMENT,
-} from "./CommentList.queries.js";
+} from "./CommentList.queries";
 import { useRouter } from "next/router";
+import type { MouseEvent } from "react";
 
 export default function CommentList() {
   const router = useRouter();
@@ -13,12 +14,12 @@ export default function CommentList() {
   });
   const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
 
-  const onClickDelete = (e) => {
+  const onClickDelete = (e: MouseEvent<HTMLImageElement>) => {
     const password = prompt("비밀번호를 입력하세요");
-    deleteBoardComment({
+    void deleteBoardComment({
       variables: {
         password,
-        boardCommentId: e.target.id,
+        boardCommentId: e.currentTarget.id,
       },
       refetchQueries: [
         {

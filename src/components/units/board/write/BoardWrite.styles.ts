@@ -147,10 +147,15 @@ export const OptionLabel = styled.label`
 export const ButtonWrapper = styled.div`
   margin-top: 80px;
 `;
+
+interface IProps {
+  isActive: boolean;
+}
+
 export const SubmitButton = styled.button`
   width: 179px;
   height: 52px;
   border: none;
-  background-color: ${(props) => (props.isActive ? "yellow" : "gray")};
-  cursor: ${(props) => (props.isActive ? "pointer" : "default")};
+  background-color: ${(props: IProps) => (props.isActive ? "yellow" : "gray")};
+  cursor: ${(props: IProps) => (props.isActive ? "pointer" : "default")};
 `;

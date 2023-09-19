@@ -55,13 +55,17 @@ export const PageMoveButton = styled.button`
   cursor: pointer;
 `;
 
+interface IProps {
+  isActive: boolean;
+}
+
 export const Page = styled.div`
   margin-left: 10px;
   margin-right: 10px;
   font-size: 20px;
-  color: ${(props) => (props.isActive ? "orange" : "")};
-  font-weight: ${(props) => (props.isActive ? "bold" : "")};
-  cursor: ${(props) => (props.isActive ? "default" : "pointer")};
+  color: ${(props: IProps) => (props.isActive ? "orange" : "")};
+  font-weight: ${(props: IProps) => (props.isActive ? "bold" : "")};
+  cursor: ${(props: IProps) => (props.isActive ? "default" : "pointer")};
 `;
 
 export const WriteButton = styled.button`

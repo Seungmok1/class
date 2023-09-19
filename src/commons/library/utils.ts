@@ -1,4 +1,4 @@
-export const getDate = (e) => {
+export const getDate = (e: any) => {
   const date = new Date(e);
   const year = date.getFullYear();
   const month = date.getMonth() + 1;

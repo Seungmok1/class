@@ -1,7 +1,8 @@
 import * as S from "./CommentWrite.styles";
 import { Rate } from "antd";
+import type { ICommentWriteUIProps } from "./CommentWrite.types";
 
-export default function CommentWriteUI(props) {
+export default function CommentWriteUI(props: ICommentWriteUIProps) {
   return (
     <S.Wrapper>
       <S.LabelWrapper>
@@ -26,7 +27,7 @@ export default function CommentWriteUI(props) {
       <S.InputWrapper>
         <S.CommentInput
           maxLength={100}
-          onChange={props.onChangeChange}
+          onChange={props.onChangeContents}
           placeholder="개인정보를 공유 및 요청하거나, 명예 훼손, 무단 광고, 불법 정보 유포시 모니터링 후 삭제될 수 있으며, 이에 대한 민형사상 책임은 게시자에게 있습니다."
           value={props.contents}
         ></S.CommentInput>

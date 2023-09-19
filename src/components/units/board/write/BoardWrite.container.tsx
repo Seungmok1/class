@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import BoardWriteUI from "./BoardWrite.presenter";
 import { CREATE_BOARD, UPDATE_BOARD } from "./BoardWrite.queries";
+import type { IBoardWriteProps } from "./BoardWrite.types";
+import type { IUpdateBoardInput } from "../../../../commons/types/generated/types";
 
-export default function BoardWrite(props) {
+export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
-  const [writer, setWriter] = useState("");
-  const [password, setPassword] = useState("");
-  const [title, setTitle] = useState("");
-  const [contents, setContents] = useState("");
+  const [writer, setWriter] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [contents, setContents] = useState<string>("");
 
   const [errorWriter, setErrorWriter] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -20,22 +22,22 @@ export default function BoardWrite(props) {
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
-  const onChangeWriter = (e) => {
+  const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
     if (e.target.value && password && title && contents) setIsActive(true);
     else setIsActive(false);
   };
-  const onChangePassword = (e) => {
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
     if (writer && e.target.value && title && contents) setIsActive(true);
     else setIsActive(false);
   };
-  const onChangeTitle = (e) => {
+  const onChangeTitle = (e: ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
     if (writer && password && e.target.value && contents) setIsActive(true);
     else setIsActive(false);
   };
-  const onChangeContents = (e) => {
+  const onChangeContents = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setContents(e.target.value);
     if (writer && password && title && e.target.value) setIsActive(true);
     else setIsActive(false);
@@ -58,24 +60,23 @@ export default function BoardWrite(props) {
           },
         });
         console.log(result.data.createBoard);
-        router.push(`/boards/${result.data.createBoard._id}`);
+        void router.push(`/boards/${result.data.createBoard._id}`);
       } catch (e) {
         alert(e);
       }
     }
   };
   const onClickUpdate = async () => {
-    const myVariables = { updateBoardInput: {}, boardId: router.query.id };
-    if (writer) myVariables.updateBoardInput.writer = writer;
-    if (title) myVariables.updateBoardInput.title = title;
-    if (contents) myVariables.updateBoardInput.contents = contents;
+    const updateBoardInput: IUpdateBoardInput = {};
+    if (title) updateBoardInput.title = title;
+    if (contents) updateBoardInput.contents = contents;
 
     try {
       const result = await updateBoard({
-        variables: { ...myVariables, password },
+        variables: { updateBoardInput, password, boardId: router.query.id },
       });
       console.log(result.data.updateBoard);
-      router.push(`/boards/${result.data.updateBoard._id}`);
+      void router.push(`/boards/${result.data.updateBoard._id}`);
     } catch (e) {
       alert(e);
     }

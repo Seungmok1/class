@@ -1,12 +1,13 @@
-import { getDate } from "@/src/commons/library/utils";
+import { getDate } from "../../../../commons/library/utils";
 import * as S from "./CommentList.styles";
 import { Rate } from "antd";
+import type { ICommentListUIProps } from "./CommentList.types";
 
-export default function CommentListUI(props) {
+export default function CommentListUI(props: ICommentListUIProps) {
   return (
     <S.TotalWrapper>
       {props.data?.fetchBoardComments.map((el) => (
-        <S.Wrapper>
+        <S.Wrapper key={el._id}>
           <S.Avatar src="/image/avatar.png"></S.Avatar>
           <S.CommentWrapper>
             <S.WriterWrapper>
