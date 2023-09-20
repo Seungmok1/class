@@ -60,8 +60,7 @@ interface IProps {
 }
 
 export const Page = styled.div`
-  margin-left: 10px;
-  margin-right: 10px;
+  margin: 10px 10px;
   font-size: 20px;
   color: ${(props: IProps) => (props.isActive ? "orange" : "")};
   font-weight: ${(props: IProps) => (props.isActive ? "bold" : "")};
@@ -71,8 +70,10 @@ export const Page = styled.div`
 export const WriteButton = styled.button`
   width: 120px;
   height: 50px;
-  float: right;
-  margin: 30px;
+  // float: right;
+  // margin: 30px;
+  position: relative;
+  left: 450px;
   background-color: white;
   cursor: pointer;
 `;

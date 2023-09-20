@@ -39,10 +39,10 @@ export default function BoardListUI(props: IBoardListUIProps) {
         )}
 
         <S.PageMoveButton onClick={props.onClickNext}>next</S.PageMoveButton>
+        <S.WriteButton onClick={props.onClickMoveWrite}>
+          게시물 등록하기
+        </S.WriteButton>
       </S.PageWrapper>
-      <S.WriteButton onClick={props.onClickMoveWrite}>
-        게시물 등록하기
-      </S.WriteButton>
     </>
   );
 }
