@@ -29,6 +29,5 @@ export default function CommentList() {
       ],
     });
   };
-  console.log(data);
   return <CommentListUI data={data} onClickDelete={onClickDelete} />;
 }

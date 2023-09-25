@@ -34,7 +34,6 @@ const Line = styled.div`
 
 export default function LayoutNavigation() {
   const router = useRouter();
-  console.log(router.asPath);
   const onClickBoard = () => {
     void router.push("/boards");
   };

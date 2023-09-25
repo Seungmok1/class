@@ -3,6 +3,7 @@ import * as S from "./BoardDetail.styles";
 import type { IBoardDetailUIProps } from "./BoardDetail.types";
 
 export default function BoardDetailUI(props: IBoardDetailUIProps) {
+  console.log(props.data?.fetchBoard);
   return (
     <S.Wrapper>
       <S.BoardWrapper>
@@ -19,6 +20,19 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
           <S.Title>{props.data?.fetchBoard?.title}</S.Title>
           <S.Contents>{props.data?.fetchBoard?.contents}</S.Contents>
         </S.Body>
+        <S.LikeButtonWrapper>
+          <S.LikeButtonSubWrapper>
+            <S.LikeButton src="/image/like.png" onClick={props.onClickLike} />
+            <S.LikeCount>{props.data?.fetchBoard.likeCount}</S.LikeCount>
+          </S.LikeButtonSubWrapper>
+          <S.LikeButtonSubWrapper>
+            <S.LikeButton
+              src="/image/dislike.png"
+              onClick={props.onClickDislike}
+            />
+            <S.LikeCount>{props.data?.fetchBoard.dislikeCount}</S.LikeCount>
+          </S.LikeButtonSubWrapper>
+        </S.LikeButtonWrapper>
       </S.BoardWrapper>
       <S.ButtonWrapper>
         <S.Button onClick={props.onClickMove}>목록으로</S.Button>

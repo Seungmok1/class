@@ -44,6 +44,7 @@ export const Writer = styled.div`
 
 export const Body = styled.div`
   width: 100%;
+  min-height: 550px;
 `;
 
 export const Title = styled.div`
@@ -71,4 +72,28 @@ export const Button = styled.button`
   background-color: white;
   border: 2px solid gray;
   cursor: pointer;
+`;
+
+export const LikeButtonWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+  position: relative:
+  top: 800px;
+`;
+
+export const LikeButtonSubWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`;
+
+export const LikeButton = styled.img`
+  padding: 10px;
+  image-color: gray;
+  cursor: pointer;
+`;
+
+export const LikeCount = styled.div`
+  padding: 10px;
 `;

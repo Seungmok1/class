@@ -15,7 +15,7 @@ const Label = styled.div`
   font-weight: 800;
   color: white;
   cursor: pointer;
-  background-color: yellow;
+  margin-right: 300px;
 `;
 
 const Git = styled.img`
