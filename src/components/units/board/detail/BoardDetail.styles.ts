@@ -1,4 +1,5 @@
 import styled from "@emotion/styled";
+import ReactPlayer from "react-player";
 
 export const Wrapper = styled.div`
   display: flex;
@@ -45,6 +46,7 @@ export const Writer = styled.div`
 export const Body = styled.div`
   width: 100%;
   min-height: 550px;
+  margin-bottom: 100px;
 `;
 
 export const Title = styled.div`
@@ -54,6 +56,11 @@ export const Title = styled.div`
 
 export const Contents = styled.div`
   padding: 20px;
+  margin-bottom: 100px;
+`;
+
+export const Youtube = styled(ReactPlayer)`
+  margin: auto;
 `;
 
 export const CreateAt = styled.span`

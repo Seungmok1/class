@@ -2,6 +2,7 @@ import * as S from "./BoardWrite.styles";
 import type { IBoardWriteUIProps } from "./BoardWrite.types";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
+  console.log(props.data?.fetchBoard);
   return (
     <S.Wrapper>
       <S.Title>{props.isEdit ? "게시물 수정" : "게시물 등록"}</S.Title>
@@ -57,7 +58,11 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       </S.AddressWrapper>
       <S.InputWrapper>
         <S.Label>유튜브</S.Label>
-        <S.Youtube placeholder="링크를 복사해주세요" />
+        <S.Youtube
+          placeholder="링크를 복사해주세요"
+          onChange={props.onChangeYoutubeUrl}
+          defaultValue={props.data?.fetchBoard.youtubeUrl ?? ""}
+        />
       </S.InputWrapper>
       <S.ImageWrapper>
         <S.Label>사진 첨부</S.Label>

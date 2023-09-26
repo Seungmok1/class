@@ -12,6 +12,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [password, setPassword] = useState<string>("");
   const [title, setTitle] = useState<string>("");
   const [contents, setContents] = useState<string>("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
 
   const [errorWriter, setErrorWriter] = useState("");
   const [errorPassword, setErrorPassword] = useState("");
@@ -42,6 +43,9 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (writer && password && title && e.target.value) setIsActive(true);
     else setIsActive(false);
   };
+  const onChangeYoutubeUrl = (e: ChangeEvent<HTMLInputElement>) => {
+    setYoutubeUrl(e.target.value);
+  };
   const onClickSubmit = async () => {
     if (!writer) setErrorWriter("이름이 입력되지 않았습니다.");
     if (!password) setErrorPassword("비밀번호가 입력되지 않았습니다");
@@ -56,6 +60,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
               password,
               title,
               contents,
+              youtubeUrl,
             },
           },
         });
@@ -88,6 +93,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangePassword={onChangePassword}
       onChangeTitle={onChangeTitle}
       onChangeContents={onChangeContents}
+      onChangeYoutubeUrl={onChangeYoutubeUrl}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
       errorWriter={errorWriter}
