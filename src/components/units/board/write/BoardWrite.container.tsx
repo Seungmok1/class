@@ -20,6 +20,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [errorContents, setErrorContents] = useState("");
   const [isActive, setIsActive] = useState(false);
 
+  const [isZipcodeModalOpen, setIsZipcodeModalOpen] = useState(false);
+  const [zipcode, setZipcode] = useState("");
+  const [address, setAddress] = useState("");
+  const [addressDetail, setAddressDetail] = useState("");
+
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
 
@@ -61,6 +66,11 @@ export default function BoardWrite(props: IBoardWriteProps) {
               title,
               contents,
               youtubeUrl,
+              boardAddress: {
+                zipcode,
+                address,
+                addressDetail,
+              },
             },
           },
         });
@@ -73,19 +83,38 @@ export default function BoardWrite(props: IBoardWriteProps) {
   };
   const onClickUpdate = async () => {
     const updateBoardInput: IUpdateBoardInput = {};
+    updateBoardInput.boardAddress = {};
     if (title) updateBoardInput.title = title;
     if (contents) updateBoardInput.contents = contents;
+    if (zipcode) updateBoardInput.boardAddress.zipcode = zipcode;
+    if (address) updateBoardInput.boardAddress.address = address;
+    if (addressDetail)
+      updateBoardInput.boardAddress.addressDetail = addressDetail;
 
     try {
       const result = await updateBoard({
         variables: { updateBoardInput, password, boardId: router.query.id },
       });
-      console.log(result.data.updateBoard);
       void router.push(`/boards/${result.data.updateBoard._id}`);
     } catch (e) {
       alert(e);
     }
   };
+  const onClickSearchButton = () => {
+    setIsZipcodeModalOpen(true);
+  };
+  const onClickModalCancel = () => {
+    setIsZipcodeModalOpen(false);
+  };
+  const handleZipcode = (data: any) => {
+    setZipcode(data.zonecode);
+    setAddress(data.address);
+    setIsZipcodeModalOpen(false);
+  };
+  const onChangeAddressDetail = (e: ChangeEvent<HTMLInputElement>) => {
+    setAddressDetail(e.target.value);
+  };
+
   return (
     <BoardWriteUI
       data={props.data}
@@ -96,12 +125,19 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onChangeYoutubeUrl={onChangeYoutubeUrl}
       onClickSubmit={onClickSubmit}
       onClickUpdate={onClickUpdate}
+      onClickSearchButton={onClickSearchButton}
+      onClickModalCancel={onClickModalCancel}
+      handleZipcode={handleZipcode}
+      onChangeAddressDetail={onChangeAddressDetail}
       errorWriter={errorWriter}
       errorPassword={errorPassword}
       errorTitle={errorTitle}
       errorContents={errorContents}
       isActive={isActive}
       isEdit={props.isEdit}
+      isZipcodeModalOpen={isZipcodeModalOpen}
+      zipcode={zipcode}
+      address={address}
     />
   );
 }

@@ -8,13 +8,30 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
     <S.Wrapper>
       <S.BoardWrapper>
         <S.Head>
-          <S.Avatar src="/image/avatar.png" />
-          <S.WriterWrapper>
-            <S.Writer>{props.data?.fetchBoard.writer}</S.Writer>
-            <S.CreateAt>
-              Date : {getDate(props.data?.fetchBoard?.createdAt)}
-            </S.CreateAt>
-          </S.WriterWrapper>
+          <S.AvatarWrapper>
+            <S.Avatar src="/image/avatar.png" />
+            <S.WriterWrapper>
+              <S.Writer>{props.data?.fetchBoard.writer}</S.Writer>
+              <S.CreateAt>
+                Date : {getDate(props.data?.fetchBoard?.createdAt)}
+              </S.CreateAt>
+            </S.WriterWrapper>
+          </S.AvatarWrapper>
+          <S.AddressIcon
+            src="/image/address.png"
+            onMouseOver={props.onMouseOverAddress}
+            onMouseOut={props.onMouseOutAddress}
+          />
+          {props.isAddressOver && (
+            <S.AddressWrapper>
+              <S.Address>
+                {props.data?.fetchBoard.boardAddress?.address}
+              </S.Address>
+              <S.AddressDetail>
+                {props.data?.fetchBoard.boardAddress?.addressDetail}
+              </S.AddressDetail>
+            </S.AddressWrapper>
+          )}
         </S.Head>
         <S.Body>
           <S.Title>{props.data?.fetchBoard?.title}</S.Title>

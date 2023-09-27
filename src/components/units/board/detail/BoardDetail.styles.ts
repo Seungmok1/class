@@ -24,9 +24,17 @@ export const Head = styled.div`
   width: 100%;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
   border-bottom: 2px solid lightGray;
   padding: 20px;
   margin-bottom: 20px;
+  position: relative;
+`;
+
+export const AvatarWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
 `;
 
 export const Avatar = styled.img`
@@ -103,4 +111,30 @@ export const LikeButton = styled.img`
 
 export const LikeCount = styled.div`
   padding: 10px;
+`;
+
+export const AddressIcon = styled.img`
+  width: 32px;
+  height: 32px;
+`;
+
+export const AddressWrapper = styled.div`
+  background-color: gray;
+  width: 400px;
+  border-radius: 15px;
+  position: absolute;
+  left: 580px;
+  top: -80px;
+`;
+
+export const Address = styled.div`
+  color: white;
+  margin: 20px;
+  text-align: right;
+`;
+
+export const AddressDetail = styled.div`
+  color: white;
+  margin: 20px;
+  text-align: right;
 `;

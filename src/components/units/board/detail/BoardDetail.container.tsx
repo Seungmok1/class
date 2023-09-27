@@ -7,9 +7,12 @@ import {
   LIKE_BOARD,
   DISLIKE_BOARD,
 } from "./BoardDetail.queries";
+import { useState } from "react";
 
 export default function BoardDetail() {
   const router = useRouter();
+
+  const [isAddressOver, setIsAddressOver] = useState(false);
 
   const { data, refetch } = useQuery(FETCH_BOARD, {
     variables: { boardId: router.query.id },
@@ -42,6 +45,13 @@ export default function BoardDetail() {
     void dislikeBoard();
     void refetch();
   };
+
+  const onMouseOverAddress = () => {
+    setIsAddressOver(true);
+  };
+  const onMouseOutAddress = () => {
+    setIsAddressOver(false);
+  };
   return (
     <>
       <BoardDetailUI
@@ -51,6 +61,9 @@ export default function BoardDetail() {
         onClickDelete={onClickDelete}
         onClickLike={onClickLike}
         onClickDislike={onClickDislike}
+        onMouseOverAddress={onMouseOverAddress}
+        onMouseOutAddress={onMouseOutAddress}
+        isAddressOver={isAddressOver}
       />
     </>
   );

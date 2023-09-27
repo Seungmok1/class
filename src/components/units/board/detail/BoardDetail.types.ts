@@ -7,4 +7,7 @@ export interface IBoardDetailUIProps {
   onClickDelete: () => void;
   onClickLike: () => void;
   onClickDislike: () => void;
+  onMouseOverAddress: () => void;
+  onMouseOutAddress: () => void;
+  isAddressOver: boolean;
 }
