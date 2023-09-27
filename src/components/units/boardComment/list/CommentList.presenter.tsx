@@ -2,6 +2,7 @@ import { getDate } from "../../../../commons/library/utils";
 import * as S from "./CommentList.styles";
 import { Rate } from "antd";
 import type { ICommentListUIProps } from "./CommentList.types";
+import Modal from "antd/es/modal/Modal";
 
 export default function CommentListUI(props: ICommentListUIProps) {
   return (
@@ -24,6 +25,18 @@ export default function CommentListUI(props: ICommentListUIProps) {
               onClick={props.onClickDelete}
               id={el._id}
             ></S.DeleteButton>
+            <Modal
+              open={props.isModalOpen}
+              onOk={props.onClickModalOk}
+              onCancel={props.onClickModalCancel}
+            >
+              비밀번호 :{" "}
+              <S.PasswordInput
+                type="password"
+                onChange={props.onChangePassword}
+                value={props.password}
+              ></S.PasswordInput>
+            </Modal>
           </S.ButtonWrapper>
         </S.Wrapper>
       ))}

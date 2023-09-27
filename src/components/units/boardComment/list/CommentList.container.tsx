@@ -5,7 +5,7 @@ import {
   DELETE_BOARD_COMMENT,
 } from "./CommentList.queries";
 import { useRouter } from "next/router";
-import type { MouseEvent } from "react";
+import { useState, type ChangeEvent, type MouseEvent } from "react";
 
 export default function CommentList() {
   const router = useRouter();
@@ -14,20 +14,51 @@ export default function CommentList() {
   });
   const [deleteBoardComment] = useMutation(DELETE_BOARD_COMMENT);
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [password, setPassword] = useState("");
+  const [boardCommentId, setBoardCommentId] = useState("");
+
   const onClickDelete = (e: MouseEvent<HTMLImageElement>) => {
-    const password = prompt("비밀번호를 입력하세요");
-    void deleteBoardComment({
-      variables: {
-        password,
-        boardCommentId: e.currentTarget.id,
-      },
-      refetchQueries: [
-        {
-          query: FETCH_BOARD_COMMENTS,
-          variables: { boardId: router.query.id },
-        },
-      ],
-    });
+    setBoardCommentId(e.currentTarget.id);
+    setIsModalOpen(true);
   };
-  return <CommentListUI data={data} onClickDelete={onClickDelete} />;
+  const onClickModalOk = async (e: any) => {
+    try {
+      await deleteBoardComment({
+        variables: {
+          password,
+          boardCommentId,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: router.query.id },
+          },
+        ],
+      });
+      setPassword("");
+      setIsModalOpen(false);
+    } catch (e) {
+      if (e instanceof Error) alert(e.message);
+    }
+  };
+  const onClickModalCancel = () => {
+    setPassword("");
+    setIsModalOpen(false);
+  };
+  const onChangePassword = (e: ChangeEvent<HTMLInputElement>) => {
+    setPassword(e.target.value);
+  };
+
+  return (
+    <CommentListUI
+      data={data}
+      password={password}
+      isModalOpen={isModalOpen}
+      onClickDelete={onClickDelete}
+      onClickModalOk={onClickModalOk}
+      onClickModalCancel={onClickModalCancel}
+      onChangePassword={onChangePassword}
+    />
+  );
 }
