@@ -18,6 +18,19 @@ export default function CommentList() {
   const [password, setPassword] = useState("");
   const [boardCommentId, setBoardCommentId] = useState("");
 
+  const [isEdits, setIsEdits] = useState([
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ]);
+
   const onClickDelete = (e: MouseEvent<HTMLImageElement>) => {
     setBoardCommentId(e.currentTarget.id);
     setIsModalOpen(true);
@@ -50,15 +63,24 @@ export default function CommentList() {
     setPassword(e.target.value);
   };
 
+  const onClickEdit = (e: MouseEvent<HTMLImageElement>) => {
+    const tmp = isEdits;
+    tmp[Number(e.currentTarget.id)] = true;
+    setIsEdits([...tmp]);
+  };
+
   return (
     <CommentListUI
       data={data}
       password={password}
       isModalOpen={isModalOpen}
+      isEdits={isEdits}
+      setIsEdits={setIsEdits}
       onClickDelete={onClickDelete}
       onClickModalOk={onClickModalOk}
       onClickModalCancel={onClickModalCancel}
       onChangePassword={onChangePassword}
+      onClickEdit={onClickEdit}
     />
   );
 }

@@ -4,10 +4,12 @@ import { useRouter } from "next/router";
 import {
   CREATE_BOARD_COMMENT,
   FETCH_BOARD_COMMENTS,
+  UPDATE_BOARD_COMMENT,
 } from "./CommentWrite.queries";
 import { type ChangeEvent, useState } from "react";
+import type { ICommentWriteProps } from "./CommentWrite.types";
 
-export default function CommentWrite() {
+export default function CommentWrite(props: ICommentWriteProps) {
   const router = useRouter();
 
   const [writer, setWriter] = useState("");
@@ -16,6 +18,7 @@ export default function CommentWrite() {
   const [contents, setContents] = useState("");
 
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
+  const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
@@ -69,9 +72,40 @@ export default function CommentWrite() {
     }
   };
 
+  const onClickUpdate = async () => {
+    if (!contents) {
+      alert("내용이 변경되지 않았습니다");
+      return;
+    }
+    try {
+      await updateBoardComment({
+        variables: {
+          updateBoardCommentInput: {
+            contents,
+            rating,
+          },
+          password,
+          boardCommentId: props.el._id,
+        },
+        refetchQueries: [
+          {
+            query: FETCH_BOARD_COMMENTS,
+            variables: { boardId: router.query.id },
+          },
+        ],
+      });
+      const tmp = props.isEdits;
+      tmp[props.index] = false;
+      props.setIsEdits([...tmp]);
+    } catch (e) {
+      alert(e);
+    }
+  };
+
   return (
     <CommentWriteUI
       onClickSubmit={onClickSubmit}
+      onClickUpdate={onClickUpdate}
       onChangeWriter={onChangeWriter}
       onChangePassword={onChangePassword}
       onChangeRating={onChangeRating}
@@ -79,6 +113,8 @@ export default function CommentWrite() {
       writer={writer}
       password={password}
       contents={contents}
+      isEdit={props.isEdits?.[props.index]}
+      el={props.el}
     />
   );
 }
