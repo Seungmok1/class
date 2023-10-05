@@ -8,11 +8,14 @@ export interface ICommentWriteUIProps {
   onChangePassword: (e: ChangeEvent<HTMLInputElement>) => void;
   onChangeRating: (e: any) => void;
   onChangeContents: (e: ChangeEvent<HTMLTextAreaElement>) => void;
+  onClickUpdateButton: () => void;
+  onClickModalCancel: () => void;
   writer: string;
   password: string;
   contents: string;
   isEdit: boolean;
   el: IBoardComment;
+  isModalOpen: boolean;
 }
 
 export interface ICommentWriteProps {

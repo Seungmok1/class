@@ -17,6 +17,8 @@ export default function CommentWrite(props: ICommentWriteProps) {
   const [rating, setRating] = useState(3);
   const [contents, setContents] = useState("");
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const [createBoardComment] = useMutation(CREATE_BOARD_COMMENT);
   const [updateBoardComment] = useMutation(UPDATE_BOARD_COMMENT);
 
@@ -72,6 +74,13 @@ export default function CommentWrite(props: ICommentWriteProps) {
     }
   };
 
+  const onClickUpdateButton = () => {
+    setIsModalOpen(true);
+  };
+  const onClickModalCancel = () => {
+    setIsModalOpen(false);
+  };
+
   const onClickUpdate = async () => {
     if (!contents) {
       alert("내용이 변경되지 않았습니다");
@@ -110,11 +119,14 @@ export default function CommentWrite(props: ICommentWriteProps) {
       onChangePassword={onChangePassword}
       onChangeRating={onChangeRating}
       onChangeContents={onChangeContents}
+      onClickUpdateButton={onClickUpdateButton}
+      onClickModalCancel={onClickModalCancel}
       writer={writer}
       password={password}
       contents={contents}
       isEdit={props.isEdits?.[props.index]}
       el={props.el}
+      isModalOpen={isModalOpen}
     />
   );
 }

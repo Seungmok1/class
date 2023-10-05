@@ -10,7 +10,7 @@ export default function CommentListUI(props: ICommentListUIProps) {
     <S.TotalWrapper>
       {props.data?.fetchBoardComments.map((el, index) => (
         <S.Wrapper key={el._id}>
-          {props.isEdits[index] || (
+          {!props.isEdits[index] ? (
             <>
               <S.Avatar src="/image/avatar.png"></S.Avatar>
               <S.CommentWrapper>
@@ -46,8 +46,7 @@ export default function CommentListUI(props: ICommentListUIProps) {
                 </Modal>
               </S.ButtonWrapper>
             </>
-          )}
-          {props.isEdits[index] && (
+          ) : (
             <CommentWrite
               isEdits={props.isEdits}
               setIsEdits={props.setIsEdits}

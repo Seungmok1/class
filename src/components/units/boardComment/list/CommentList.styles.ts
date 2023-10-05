@@ -13,8 +13,7 @@ export const Wrapper = styled.div`
   flex-direction: row;
   justify-content: space-around;
   align-items: center;
-  margin-top: 30px;
-  border-bottom: 1px solid gray;
+  margin: 40px 0;
 `;
 
 export const Avatar = styled.img`
@@ -27,6 +26,7 @@ export const CommentWrapper = styled.div`
   flex-direction: column;
   width: 85%;
   height: 100%;
+  border-bottom: 1px solid gray;
 `;
 
 export const WriterWrapper = styled.div`
