@@ -2,9 +2,9 @@ import Modal from "antd/es/modal/Modal";
 import * as S from "./BoardWrite.styles";
 import type { IBoardWriteUIProps } from "./BoardWrite.types";
 import DaumPostcodeEmbed from "react-daum-postcode";
+import Upload01 from "../../../commons/upload/01/Upload01.container";
 
 export default function BoardWriteUI(props: IBoardWriteUIProps) {
-  console.log(props.data?.fetchBoard.boardAddress);
   return (
     <S.Wrapper>
       <S.Title>{props.isEdit ? "게시물 수정" : "게시물 등록"}</S.Title>
@@ -95,9 +95,16 @@ export default function BoardWriteUI(props: IBoardWriteUIProps) {
       </S.InputWrapper>
       <S.ImageWrapper>
         <S.Label>사진 첨부</S.Label>
-        <S.UploadButton>upload</S.UploadButton>
-        <S.UploadButton>upload</S.UploadButton>
-        <S.UploadButton>upload</S.UploadButton>
+        <S.ImageSubWrapper>
+          {props.images.map((el, index) => (
+            <Upload01
+              key={index}
+              index={index}
+              fileUrl={el}
+              onChangeFileUrls={props.onChangeFileUrls}
+            />
+          ))}
+        </S.ImageSubWrapper>
       </S.ImageWrapper>
       <S.OptionWrapper>
         <S.Label>메인 설정</S.Label>

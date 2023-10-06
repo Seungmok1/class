@@ -1,4 +1,4 @@
-import { type ChangeEvent, useState } from "react";
+import { type ChangeEvent, useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 import { useRouter } from "next/router";
 import BoardWriteUI from "./BoardWrite.presenter";
@@ -8,6 +8,7 @@ import type { IUpdateBoardInput } from "../../../../commons/types/generated/type
 
 export default function BoardWrite(props: IBoardWriteProps) {
   const router = useRouter();
+
   const [writer, setWriter] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -25,8 +26,16 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const [address, setAddress] = useState("");
   const [addressDetail, setAddressDetail] = useState("");
 
+  const [images, setImages] = useState(["", "", ""]);
+
   const [createBoard] = useMutation(CREATE_BOARD);
   const [updateBoard] = useMutation(UPDATE_BOARD);
+
+  useEffect(() => {
+    const temp = props.data?.fetchBoard.images;
+    if (temp !== undefined && temp !== null) setImages([...temp]);
+    console.log(temp);
+  }, [props.data]);
 
   const onChangeWriter = (e: ChangeEvent<HTMLInputElement>) => {
     setWriter(e.target.value);
@@ -51,6 +60,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
   const onChangeYoutubeUrl = (e: ChangeEvent<HTMLInputElement>) => {
     setYoutubeUrl(e.target.value);
   };
+
   const onClickSubmit = async () => {
     if (!writer) setErrorWriter("이름이 입력되지 않았습니다.");
     if (!password) setErrorPassword("비밀번호가 입력되지 않았습니다");
@@ -71,10 +81,10 @@ export default function BoardWrite(props: IBoardWriteProps) {
                 address,
                 addressDetail,
               },
+              images,
             },
           },
         });
-        console.log(result.data.createBoard);
         void router.push(`/boards/${result.data.createBoard._id}`);
       } catch (e) {
         alert(e);
@@ -82,6 +92,18 @@ export default function BoardWrite(props: IBoardWriteProps) {
     }
   };
   const onClickUpdate = async () => {
+    if (
+      title === "" &&
+      contents === "" &&
+      youtubeUrl === "" &&
+      address === "" &&
+      addressDetail === "" &&
+      zipcode === ""
+    ) {
+      alert("수정한 내용이 없습니다.");
+      return;
+    }
+
     const updateBoardInput: IUpdateBoardInput = {};
     updateBoardInput.boardAddress = {};
     if (title) updateBoardInput.title = title;
@@ -90,6 +112,8 @@ export default function BoardWrite(props: IBoardWriteProps) {
     if (address) updateBoardInput.boardAddress.address = address;
     if (addressDetail)
       updateBoardInput.boardAddress.addressDetail = addressDetail;
+    // if (images !== props.data?.fetchBoard.images)
+    //   updateBoardInput.images = images;
 
     try {
       const result = await updateBoard({
@@ -97,7 +121,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       });
       void router.push(`/boards/${result.data.updateBoard._id}`);
     } catch (e) {
-      alert(e);
+      if (e instanceof Error) alert(e.message);
     }
   };
   const onClickSearchButton = () => {
@@ -115,6 +139,12 @@ export default function BoardWrite(props: IBoardWriteProps) {
     setAddressDetail(e.target.value);
   };
 
+  const onChangeFileUrls = (fileUrl: string, index: number) => {
+    const temp = [...images];
+    temp[index] = fileUrl;
+    setImages(temp);
+  };
+
   return (
     <BoardWriteUI
       data={props.data}
@@ -129,6 +159,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       onClickModalCancel={onClickModalCancel}
       handleZipcode={handleZipcode}
       onChangeAddressDetail={onChangeAddressDetail}
+      onChangeFileUrls={onChangeFileUrls}
       errorWriter={errorWriter}
       errorPassword={errorPassword}
       errorTitle={errorTitle}
@@ -138,6 +169,7 @@ export default function BoardWrite(props: IBoardWriteProps) {
       isZipcodeModalOpen={isZipcodeModalOpen}
       zipcode={zipcode}
       address={address}
+      images={images}
     />
   );
 }

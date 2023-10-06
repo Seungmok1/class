@@ -71,6 +71,21 @@ export const Youtube = styled(ReactPlayer)`
   margin: auto;
 `;
 
+export const ImageWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin-top: 100px;
+`;
+
+export const Image = styled.img`
+  width: 200px;
+  height: 200px;
+  margin: 0 50px;
+`;
+
 export const CreateAt = styled.span`
   font-size: 15px;
 `;

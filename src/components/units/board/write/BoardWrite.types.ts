@@ -19,6 +19,7 @@ export interface IBoardWriteUIProps {
   onClickModalCancel: () => void;
   handleZipcode: (e: any) => void;
   onChangeAddressDetail: (e: ChangeEvent<HTMLInputElement>) => void;
+  onChangeFileUrls: (fileUrl: string, index: number) => void;
   errorWriter: string;
   errorPassword: string;
   errorTitle: string;
@@ -28,4 +29,5 @@ export interface IBoardWriteUIProps {
   isZipcodeModalOpen: boolean;
   zipcode: string;
   address: string;
+  images: string[];
 }

@@ -41,6 +41,17 @@ export default function BoardDetailUI(props: IBoardDetailUIProps) {
             width="600px"
             height="350px"
           ></S.Youtube>
+          <S.ImageWrapper>
+            {props.data?.fetchBoard.images?.map((el, index) => {
+              if (el === "") return <></>;
+              return (
+                <S.Image
+                  key={index}
+                  src={`https://storage.googleapis.com/${el}`}
+                />
+              );
+            })}
+          </S.ImageWrapper>
         </S.Body>
         <S.LikeButtonWrapper>
           <S.LikeButtonSubWrapper>
