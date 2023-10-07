@@ -2,14 +2,33 @@ import BoardListUI from "./BoardList.presenter";
 import { useQuery } from "@apollo/client";
 import { FETCH_BOARDS, FETCH_BOARDS_COUNT } from "./BoardList.queries";
 import { useRouter } from "next/router";
-import { useState, type MouseEvent } from "react";
+import { useState, type MouseEvent, type ChangeEvent } from "react";
 
 export default function BoardList() {
   const router = useRouter();
-  const { data, refetch } = useQuery(FETCH_BOARDS, { variables: { page: 1 } });
+
   const [startPage, setStartPage] = useState(1);
   const [activedPage, setActivedPage] = useState(1);
-  const { data: dataBoardsCount } = useQuery(FETCH_BOARDS_COUNT);
+  const [search, setSearch] = useState("");
+
+  const { data, refetch } = useQuery(FETCH_BOARDS, { variables: { page: 1 } });
+  const { data: dataBoardsCount, refetch: refetchBoardsCount } =
+    useQuery(FETCH_BOARDS_COUNT);
+
+  const onChangeSearch = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearch(e.target.value);
+  };
+
+  const handleEnterKey = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") onClickSearchButton();
+  };
+
+  const onClickSearchButton = () => {
+    void refetch({ page: 1, search });
+    void refetchBoardsCount({ search });
+    setActivedPage(1);
+    setStartPage(1);
+  };
 
   const onClickMoveDetail = (e: MouseEvent<HTMLDivElement>) => {
     void router.push(`/boards/${e.currentTarget.id}`);
@@ -39,6 +58,9 @@ export default function BoardList() {
   return (
     <BoardListUI
       data={data}
+      onChangeSearch={onChangeSearch}
+      handleEnterKey={handleEnterKey}
+      onClickSearchButton={onClickSearchButton}
       onClickMoveDetail={onClickMoveDetail}
       onClickMoveWrite={onClickMoveWrite}
       onClickPage={onClickPage}

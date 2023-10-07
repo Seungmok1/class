@@ -5,7 +5,17 @@ import type { IBoardListUIProps } from "./BoardList.types";
 export default function BoardListUI(props: IBoardListUIProps) {
   return (
     <>
-      <S.Wrapper>
+      <S.SearchWrapper>
+        <S.SearchBar
+          placeholder="제목을 검색해주세요"
+          onChange={props.onChangeSearch}
+          onKeyDown={props.handleEnterKey}
+        />
+        <S.SearchButton onClick={props.onClickSearchButton}>
+          검색하기
+        </S.SearchButton>
+      </S.SearchWrapper>
+      <S.HeadWrapper>
         <S.Row>
           <S.ColumnHeader>ID</S.ColumnHeader>
           <S.ColumnHeaderTitle>제목</S.ColumnHeaderTitle>
@@ -20,7 +30,7 @@ export default function BoardListUI(props: IBoardListUIProps) {
             <S.Column>{getDate(el.createdAt)}</S.Column>
           </S.Row>
         ))}
-      </S.Wrapper>
+      </S.HeadWrapper>
       <S.PageWrapper>
         <S.PageMoveButton onClick={props.onClickPrev}>prev</S.PageMoveButton>
         {new Array(10).fill(1).map((_, index) =>
